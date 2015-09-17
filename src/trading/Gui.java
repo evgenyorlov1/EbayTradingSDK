@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package trading;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,7 +20,7 @@ public class Gui extends javax.swing.JFrame {
     /**
      * Creates new form Gui
      */
-    public Gui() {
+    public Gui() {                        
         setResizable(false);
         setLocationRelativeTo(null);        
         initComponents();        
@@ -38,10 +39,11 @@ public class Gui extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jProgressBar1 = new javax.swing.JProgressBar();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -78,29 +80,29 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(jButton2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(27, 27, 27)
+                            .addComponent(jButton2))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,14 +114,14 @@ public class Gui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -128,42 +130,71 @@ public class Gui extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jProgressBar1.setIndeterminate(true);
-        String[] words = {};
-        String ebayItem = jTextField1.getText();                
-        jTextField1.setText("");        
-        String newTitle = jTextField3.getText();        
-        jTextField3.setText("");        
+        String[] words = new String[2];
+        String ebayItem = "";
+        String newTitle = "";
+        ebayItem = jTextField1.getText();                               
+        newTitle = jTextArea1.getText();                
+        jTextField1.setText(""); 
+        jTextArea1.setText("");        
+        
         if(!ebayItem.isEmpty() && !newTitle.isEmpty()) {
-            words[0] = ebayItem;            
+            words[0] = ebayItem;
             words[1] = newTitle;           
-            //call to Trading class          
+            //enter auth token    
+            String token;            
+            javax.swing.JTextArea jTextArea10 = new javax.swing.JTextArea();                        
+            javax.swing.JPanel panel10 = new javax.swing.JPanel(new java.awt.GridLayout(0, 1));           
+            panel10.add(new javax.swing.JLabel("Enter your authentication token:"));
+            panel10.add(jTextArea10);            
+            int result = JOptionPane.showConfirmDialog(null, panel10, "Login",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION && !jTextArea10.getText().isEmpty()) {
+                token = jTextArea10.getText();
+                //call to Trading class  
+                Trading.reviseItem(token, words);
+            } else {
+                if (result == JOptionPane.CANCEL_OPTION) {} else {JOptionPane.showMessageDialog(null, "Enter authentikation token!");}
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Empty field. Reenter parametrs!");
-        }
-        
-        
-        jProgressBar1.setIndeterminate(false);
-        
+        }                
+        jProgressBar1.setIndeterminate(false);        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         jProgressBar1.setIndeterminate(true);
-        JFileChooser fileopen = new JFileChooser();             
-        int ret = fileopen.showDialog(null, "Open File");                
-        if (ret == JFileChooser.APPROVE_OPTION) {            
-            try {                
-                File file = fileopen.getSelectedFile();                
-                String line ="";
-                BufferedReader br = new BufferedReader(new FileReader(file));                                
-                while((line = br.readLine()) != null) {
-                    //here is separation into words devided by comma                    
-                    line = line.trim();
-                    String[] words = line.split(";");
-                    //here is call to Trading class                                                            
-                }                                
-            } catch (Exception e) {System.out.println("Error load csv: " + e);}            
-        }
+        
+        String token;            
+        javax.swing.JTextArea jTextArea10 = new javax.swing.JTextArea();                        
+        javax.swing.JPanel panel10 = new javax.swing.JPanel(new java.awt.GridLayout(0, 1));           
+        panel10.add(new javax.swing.JLabel("Enter your authentication token:"));
+        panel10.add(jTextArea10);            
+        int result = JOptionPane.showConfirmDialog(null, panel10, "Login",
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION && !jTextArea10.getText().isEmpty()) {
+            token = jTextArea10.getText();
+            //Choosing right file                    
+            JFileChooser fileopen = new JFileChooser();             
+            int ret = fileopen.showDialog(null, "Open File");                
+            if (ret == JFileChooser.APPROVE_OPTION) {            
+                try {                
+                    File file = fileopen.getSelectedFile();                
+                    String line ="";
+                    BufferedReader br = new BufferedReader(new FileReader(file));                                
+                    while((line = br.readLine()) != null) {
+                        //here is separation into words devided by comma                    
+                        line = line.trim();
+                        String[] words = line.split(";");
+                        //here is call to Trading class
+                        Trading.reviseItem(token, words);
+                    }                                
+                } catch (Exception e) {System.out.println("Error load csv: " + e);}            
+            }
+        } else {
+            if(result == JOptionPane.CANCEL_OPTION) {} else {JOptionPane.showMessageDialog(null, "Enter authentikation token!");}
+        }                
         jProgressBar1.setIndeterminate(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -175,6 +206,9 @@ public class Gui extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
+        // here is date test
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -214,7 +248,8 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
